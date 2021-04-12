@@ -45,7 +45,15 @@ public class Parque implements IParque{
 	// 
 	// TODO MÃ©todo salirDelParque
 	//
-	
+	public void salirDelParque(String puerta){
+		// Decrementamos el contador total y el individual
+		contadorPersonasTotales--;
+		//Comprobar invariante
+		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+		
+		// Imprimimos el estado del parque
+		imprimirInfo(puerta, "Entrada");
+	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
 		System.out.println(movimiento + " por puerta " + puerta);
@@ -77,13 +85,24 @@ public class Parque implements IParque{
 		//
 		// TODO
 		//
+		int cont = 0;
+		for(String p: contadoresPersonasPuerta.keySet()){
+			cont += 1;
+		}
+		assert contadorPersonasTotales < cont*20: "No puedes entrar, el Parque está lleno";
+	
 	}
 
 	protected void comprobarAntesDeSalir(){		// TODO
 		//
 		// TODO
 		//
-	}
+		int cont = 0;
+		for(String p: contadoresPersonasPuerta.keySet()){
+			cont += 1;
+		}
+		assert contadorPersonasTotales > 0: "No puede salir nadie, pues el Parque está vacío";
+		}
 
 
 }
