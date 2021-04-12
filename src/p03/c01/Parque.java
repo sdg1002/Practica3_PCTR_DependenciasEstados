@@ -42,9 +42,6 @@ public class Parque implements IParque{
 		
 	}
 	
-	// 
-	// TODO Método salirDelParque
-	//
 	public synchronized void salirDelParque(String puerta){
 		
 		if (contadoresPersonasPuerta.get(puerta) == null){
@@ -86,32 +83,40 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		// TO DO 
-		// TO DO
+		
+		assert sumarContadoresPuerta() >= 0 : "No hay nadie en el parque";
+		
+		assert sumarContadoresPuerta() <= aforoMax : "Ya se ha superado el aforo maximo";
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TO DO
+	protected synchronized void comprobarAntesDeEntrar(){
 		//
 		// TO DO
 		//
-		int cont = 0;
-		for(String p: contadoresPersonasPuerta.keySet()){
-			cont += 1;
+		if (contadorPersonasTotales==aforoMax) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		assert contadorPersonasTotales < cont*20: "No puedes entrar, el Parque está lleno";
+		
+		//assert contadorPersonasTotales < aforoMax: "No puedes entrar, el Parque está lleno";
 	
 	}
 
-	protected void comprobarAntesDeSalir(){		// TO DO
-		//
-		// TO DO
-		//
-		int cont = 0;
-		for(String p: contadoresPersonasPuerta.keySet()){
-			cont += 1;
+	protected synchronized void comprobarAntesDeSalir(){
+		
+		if (contadorPersonasTotales==0) {
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} 
 		}
-		assert contadorPersonasTotales > 0: "No puede salir nadie, pues el Parque está vacío";
-		}
+		
+		//assert contadorPersonasTotales > 0: "No puede salir nadie, pues el Parque está vacío";
+	}
 
 
 }
