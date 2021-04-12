@@ -5,28 +5,28 @@ import java.util.Hashtable;
 
 public class Parque implements IParque{
 
-	// TODO 
-	private final int aforoMax = 50;
+	// TO DO 
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
+	private final int aforoMax;
 	
 	
-	public Parque() {	// TODO
+	public Parque(int aforo) {	// TO DO
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
-		// TODO
+		this.aforoMax=  aforo;
+		// TO DO
 	}
 
 
 	@Override
-	public void entrarAlParque(String puerta){		// TODO
+	public synchronized void entrarAlParque(String puerta){
 		
 		// Si no hay entradas por esa puerta, inicializamos
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// Precondicion / Invariante
 		comprobarAntesDeEntrar();
 		
 		// Aumentamos el contador total y el individual
@@ -36,28 +36,32 @@ public class Parque implements IParque{
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
 		
-		// TODO
+		checkInvariante();
 		
-		
-		// TODO
+		notifyAll();
 		
 	}
 	
 	// 
-	// TODO MÃ©todo salirDelParque
+	// TODO Método salirDelParque
 	//
-	public void salirDelParque(String puerta){
-		//Comprobar invariante / Precondicion
-		comprobarAntesDeSalir();
+	public synchronized void salirDelParque(String puerta){
+		
+		if (contadoresPersonasPuerta.get(puerta) == null){
+			contadoresPersonasPuerta.put(puerta, 0);
+		}
 		
 		// Decrementamos el contador total y el individual
 		contadorPersonasTotales--;
+		//Comprobar invariante
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
-
-		//Comprobar Postcondicion
 		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
+		
+		checkInvariante();
+		
+		notifyAll();
 	}
 	
 	private void imprimirInfo (String puerta, String movimiento){
@@ -82,27 +86,30 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
-		assert sumarContadoresPuerta() <= aforoMax : "No se debe superar el aforo Máximo por el Covid";
-		// TODO 
-		// TODO
+		// TO DO 
+		// TO DO
 	}
 
-	protected void comprobarAntesDeEntrar(){	// TODO
+	protected void comprobarAntesDeEntrar(){	// TO DO
 		//
-		// TODO
+		// TO DO
 		//
-		/*int cont = 0;
+		int cont = 0;
 		for(String p: contadoresPersonasPuerta.keySet()){
 			cont += 1;
-		}*/
-		assert contadorPersonasTotales < aforoMax: "No puedes pasar, el Parque está lleno";
+		}
+		assert contadorPersonasTotales < cont*20: "No puedes entrar, el Parque está lleno";
 	
 	}
 
-	protected void comprobarAntesDeSalir(){		// TODO
+	protected void comprobarAntesDeSalir(){		// TO DO
 		//
-		// TODO
+		// TO DO
 		//
+		int cont = 0;
+		for(String p: contadoresPersonasPuerta.keySet()){
+			cont += 1;
+		}
 		assert contadorPersonasTotales > 0: "No puede salir nadie, pues el Parque está vacío";
 		}
 
