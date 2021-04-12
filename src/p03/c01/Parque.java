@@ -6,6 +6,7 @@ import java.util.Hashtable;
 public class Parque implements IParque{
 
 	// TODO 
+	private final int aforoMax = 50;
 	private int contadorPersonasTotales;
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	
@@ -25,8 +26,8 @@ public class Parque implements IParque{
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
 		
-		// TODO
-				
+		// Precondicion / Invariante
+		comprobarAntesDeEntrar();
 		
 		// Aumentamos el contador total y el individual
 		contadorPersonasTotales++;		
@@ -46,10 +47,14 @@ public class Parque implements IParque{
 	// TODO MÃ©todo salirDelParque
 	//
 	public void salirDelParque(String puerta){
+		//Comprobar invariante / Precondicion
+		comprobarAntesDeSalir();
+		
 		// Decrementamos el contador total y el individual
 		contadorPersonasTotales--;
-		//Comprobar invariante
 		contadoresPersonasPuerta.put(puerta, contadoresPersonasPuerta.get(puerta)-1);
+
+		//Comprobar Postcondicion
 		
 		// Imprimimos el estado del parque
 		imprimirInfo(puerta, "Entrada");
@@ -77,6 +82,7 @@ public class Parque implements IParque{
 	
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
+		assert sumarContadoresPuerta() <= aforoMax : "No se debe superar el aforo Máximo por el Covid";
 		// TODO 
 		// TODO
 	}
@@ -85,11 +91,11 @@ public class Parque implements IParque{
 		//
 		// TODO
 		//
-		int cont = 0;
+		/*int cont = 0;
 		for(String p: contadoresPersonasPuerta.keySet()){
 			cont += 1;
-		}
-		assert contadorPersonasTotales < cont*20: "No puedes entrar, el Parque está lleno";
+		}*/
+		assert contadorPersonasTotales < aforoMax: "No puedes pasar, el Parque está lleno";
 	
 	}
 
@@ -97,10 +103,6 @@ public class Parque implements IParque{
 		//
 		// TODO
 		//
-		int cont = 0;
-		for(String p: contadoresPersonasPuerta.keySet()){
-			cont += 1;
-		}
 		assert contadorPersonasTotales > 0: "No puede salir nadie, pues el Parque está vacío";
 		}
 

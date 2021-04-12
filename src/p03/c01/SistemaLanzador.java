@@ -1,5 +1,7 @@
 package src.p03.c01;
 
+import src.p03.c01.*;
+
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
@@ -17,10 +19,10 @@ public class SistemaLanzador {
 			new Thread (entradas).start();
 			
 			// 
-			// TODO
+			// TO DO
 			//
-			
-			
+			ActividadSalidaPuerta salidas = new ActividadSalidaPuerta(puerta, parque);
+			new Thread (salidas).start();			
 		}
 	}	
 }
