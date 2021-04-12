@@ -45,7 +45,7 @@ public class Parque implements IParque{
 	// 
 	// TODO Método salirDelParque
 	//
-	public void salirDelParque(String puerta){
+	public synchronized void salirDelParque(String puerta){
 		
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
