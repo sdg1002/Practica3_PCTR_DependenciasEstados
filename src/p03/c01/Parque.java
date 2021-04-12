@@ -47,6 +47,7 @@ public class Parque implements IParque{
 		if (contadoresPersonasPuerta.get(puerta) == null){
 			contadoresPersonasPuerta.put(puerta, 0);
 		}
+		comprobarAntesDeSalir();
 		
 		// Decrementamos el contador total y el individual
 		contadorPersonasTotales--;
@@ -84,9 +85,9 @@ public class Parque implements IParque{
 	protected void checkInvariante() {
 		assert sumarContadoresPuerta() == contadorPersonasTotales : "INV: La suma de contadores de las puertas debe ser igual al valor del contador del parte";
 		
-		assert sumarContadoresPuerta() <= 0 : "No hay nadie en el parque";
+		assert sumarContadoresPuerta() >= 0 : "No hay nadie en el parque";
 		
-		assert sumarContadoresPuerta() >= aforoMax : "Ya se ha superado el aforo maximo";
+		assert sumarContadoresPuerta() <= aforoMax : "Ya se ha superado el aforo maximo";
 	}
 
 	protected synchronized void comprobarAntesDeEntrar(){
@@ -103,7 +104,7 @@ public class Parque implements IParque{
 
 	protected synchronized void comprobarAntesDeSalir(){
 		
-		if (contadorPersonasTotales<=0) {
+		if (contadorPersonasTotales <= 0) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
