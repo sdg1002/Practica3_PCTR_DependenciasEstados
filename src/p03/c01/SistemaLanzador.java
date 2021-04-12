@@ -1,7 +1,5 @@
 package src.p03.c01;
 
-import src.p03.c01.*;
-
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
@@ -10,7 +8,7 @@ public class SistemaLanzador {
 		
 		System.out.println("¡Parque abierto!");
 		
-		for (int i = 0; i < Integer.parseInt(args[0]); i++) {
+		for (int i = 0; i < 2; i++) {
 			
 			String puerta = ""+((char) (letra_puerta++));
 			
