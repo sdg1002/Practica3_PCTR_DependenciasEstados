@@ -5,10 +5,11 @@ public class SistemaLanzador {
 		
 		IParque parque = new Parque(50); // TODO
 		char letra_puerta = 'A';
+		int numPuertas=3;
 		
 		System.out.println("¡Parque abierto!");
 		
-		for (int i = 0; i < 2; i++) {
+		for (int i = 0; i < numPuertas; i++) {
 			
 			String puerta = ""+((char) (letra_puerta++));
 			
@@ -20,7 +21,7 @@ public class SistemaLanzador {
 			// TO DO
 			//
 			ActividadSalidaPuerta salidas = new ActividadSalidaPuerta(puerta, parque);
-			new Thread (salidas).start();			
+			new Thread (salidas).start();
 		}
 	}	
 }

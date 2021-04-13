@@ -10,7 +10,6 @@ public class Parque implements IParque{
 	private Hashtable<String, Integer> contadoresPersonasPuerta;
 	private final int aforoMax;
 	
-	
 	public Parque(int aforo) {	// TO DO
 		contadorPersonasTotales = 0;
 		contadoresPersonasPuerta = new Hashtable<String, Integer>();
@@ -92,7 +91,7 @@ public class Parque implements IParque{
 
 	protected synchronized void comprobarAntesDeEntrar(){
 		
-		if (contadorPersonasTotales>=aforoMax) {
+		while (contadorPersonasTotales>=aforoMax) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
@@ -104,7 +103,7 @@ public class Parque implements IParque{
 
 	protected synchronized void comprobarAntesDeSalir(){
 		
-		if (contadorPersonasTotales <= 0) {
+		while (contadorPersonasTotales <= 0) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
