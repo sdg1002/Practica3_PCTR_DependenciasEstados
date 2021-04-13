@@ -3,9 +3,10 @@ package src.p03.c01;
 public class SistemaLanzador {
 	public static void main(String[] args) {
 		
-		IParque parque = new Parque(50); // TODO
+		int aforo=50;
+		IParque parque = new Parque(aforo); // TODO
 		char letra_puerta = 'A';
-		int numPuertas=3;
+		int numPuertas=5;
 		
 		System.out.println("¡Parque abierto!");
 		
